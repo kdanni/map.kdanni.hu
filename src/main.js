@@ -4,6 +4,14 @@ import './style.css';
 import { importMap } from './import.js';
 const map = L.map('map').setView([47.16, 19.5], 7);
 const status = document.querySelector('#status');
+const sidebar = document.querySelector('#sidebar');
+const sidebarToggle = document.querySelector('#sidebar-toggle');
+sidebarToggle.onclick = () => {
+  sidebar.hidden = !sidebar.hidden;
+  sidebarToggle.setAttribute('aria-expanded', String(!sidebar.hidden));
+  sidebarToggle.textContent = sidebar.hidden ? 'Oldalsáv megjelenítése' : 'Oldalsáv elrejtése';
+  map.invalidateSize({ pan: false });
+};
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).on('tileerror', () => { status.textContent = 'Az alaptérkép nem tölthető be. Ellenőrizd az internetkapcsolatot.'; }).addTo(map);
